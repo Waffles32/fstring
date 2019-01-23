@@ -2,6 +2,8 @@
 
 from sys import stdin, stdout, argv
 from json import load, dump
+from os import makedirs
+from os.path import dirname
 
 context = load(stdin)
 
@@ -16,5 +18,23 @@ else:
     template = args[index+1]
     args[index:index+2] = ()
 
-stdout.write(template.format(**context))
+# 
+# try:
+#     index = args.index('-o')
+# except ValueError:
+#     output = None
+# else:
+#     output = args[index+1]
+#     args[index:index+2] = ()
+
+text = template.format(**context)
+
+# if output:
+#     filename = output.format(**context)
+#     path = dirname(filename)
+#     makedirs(path, exist_ok=True)
+#     with open(filename, 'w') as stream:
+#         stream.write(text)
+# else:
+stdout.write(text)
 stdout.flush()
