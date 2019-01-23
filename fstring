@@ -5,8 +5,16 @@ from json import load, dump
 
 context = load(stdin)
 
-with open(argv[1]) as stream:
-    template = stream.read()
+args = argv[1:]
+
+try:
+    index = args.index('-f')
+except ValueError:
+    with open(args[0]) as stream:
+        template = stream.read()
+else:
+    template = args[index+1]
+    args[index:index+2] = ()
 
 stdout.write(template.format(**context))
 stdout.flush()
